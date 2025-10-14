@@ -32,3 +32,5 @@ cp .env.example .env
 php artisan key:generate
 php artisan serve
 ```
+
+http://127.0.0.1:8000/
