@@ -9,7 +9,7 @@ It provides a clean, responsive interface and uses Laravel’s expressive syntax
 
 -   Scarlett Jet
 -   Rajkamal Singh
--   Joe Kwaku Gharraty
+-   Joe Kwaku Ghartey Appiah
 -   Divjit Singh
 
 ---
@@ -32,3 +32,5 @@ cp .env.example .env
 php artisan key:generate
 php artisan serve
 ```
+
+http://127.0.0.1:8000/
