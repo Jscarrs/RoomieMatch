@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserDashboardController;
 
 // -------------------
@@ -37,14 +38,19 @@ Route::prefix('admin')->group(function () {
 // Authenticated User Routes
 // -------------------
 Route::middleware(['auth'])->group(function () {
-    // Default Laravel Breeze Dashboard (if you use it)
+    // Breeze default dashboard
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 
-    // Custom User Dashboard (your version)
+    // Custom User Dashboard
     Route::get('/user/dashboard', [UserDashboardController::class, 'index'])
         ->name('user.dashboard');
+
+    // Profile routes (from Breeze)
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 
