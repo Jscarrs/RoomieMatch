@@ -3,58 +3,54 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\AdminDashboardController;
 
-// -------------------
-// Public Pages
-// -------------------
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+/*
+|--------------------------------------------------------------------------
+| Public Pages
+|--------------------------------------------------------------------------
+*/
 
-Route::get('/about', function () {
-    return view('about');
-})->name('about');
+Route::view('/', 'home')->name('home');
+Route::view('/about', 'about')->name('about');
+Route::view('/contact', 'contact')->name('contact');
 
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact');
+/*
+|--------------------------------------------------------------------------
+| Admin Pages
+|--------------------------------------------------------------------------
+*/
 
-
-// -------------------
-// Admin Pages
-// -------------------
 Route::prefix('admin')->group(function () {
-    Route::get('/', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    // Admin Dashboard
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])
+        ->name('admin.dashboard');
 
-    Route::get('/users', function () {
-        return view('admin.users');
-    })->name('admin.users');
+    // Admin Users Page (optional placeholder)
+    Route::view('/users', 'admin.users')->name('admin.users');
 });
 
+/*
+|--------------------------------------------------------------------------
+| Authenticated User Routes
+|--------------------------------------------------------------------------
+*/
 
-// -------------------
-// Authenticated User Routes
-// -------------------
 Route::middleware(['auth'])->group(function () {
-    // Breeze default dashboard
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-
-    // Custom User Dashboard
-    Route::get('/user/dashboard', [UserDashboardController::class, 'index'])
+    // ✅ Use your custom User Dashboard (no Breeze layout)
+    Route::get('/dashboard', [UserDashboardController::class, 'index'])
         ->name('user.dashboard');
 
-    // Profile routes (from Breeze)
+    // Profile Routes (from Breeze)
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+/*
+|--------------------------------------------------------------------------
+| Auth Routes
+|--------------------------------------------------------------------------
+*/
 
-// -------------------
-// Auth Routes
-// -------------------
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -1,6 +1,6 @@
-@extends('layouts.public')
-@section('title', 'Contact Us')
-@section('content')
+
+<?php $__env->startSection('title', 'Contact Us'); ?>
+<?php $__env->startSection('content'); ?>
 
 <div class="max-w-4xl mx-auto">
     <!-- Header -->
@@ -12,7 +12,7 @@
     <!-- Contact Form -->
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
         <form action="#" method="POST" class="space-y-6">
-            @csrf
+            <?php echo csrf_field(); ?>
             
             <!-- Full Name -->
             <div>
@@ -116,4 +116,5 @@
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.public', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\jjsr1\OneDrive\Desktop\4. PHP\roomiematch\resources\views/contact.blade.php ENDPATH**/ ?>

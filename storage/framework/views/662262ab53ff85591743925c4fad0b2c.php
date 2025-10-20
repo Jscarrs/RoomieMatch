@@ -1,12 +1,12 @@
-@extends('layouts.public')
-@section('title', 'Home')
-@section('content')
+
+<?php $__env->startSection('title', 'Home'); ?>
+<?php $__env->startSection('content'); ?>
 
 <!-- Hero Section -->
 <section class="text-center bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg mb-8">
     <h1 class="text-5xl font-bold text-gray-900 dark:text-white mb-4">Find Your Perfect Roommate</h1>
     <p class="text-xl text-gray-600 dark:text-gray-300 mb-6">RoomieMatch helps students find compatible roommates and affordable housing near campus.</p>
-    <a href="{{ route('about') }}" class="inline-flex items-center px-6 py-3 bg-indigo-600 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+    <a href="<?php echo e(route('about')); ?>" class="inline-flex items-center px-6 py-3 bg-indigo-600 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
         Learn More
     </a>
 </section>
@@ -40,9 +40,10 @@
 <div class="mt-12 text-center bg-indigo-600 dark:bg-indigo-700 p-8 rounded-lg shadow-lg">
     <h2 class="text-3xl font-bold text-white mb-4">Ready to Find Your Perfect Match?</h2>
     <p class="text-indigo-100 mb-6">Join thousands of students who have found their ideal roommates through RoomieMatch.</p>
-    <a href="{{ route('register') }}" class="inline-flex items-center px-8 py-4 bg-white border border-transparent rounded-md font-semibold text-sm text-indigo-600 uppercase tracking-widest hover:bg-gray-100 focus:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 transition ease-in-out duration-150">
+    <a href="<?php echo e(route('register')); ?>" class="inline-flex items-center px-8 py-4 bg-white border border-transparent rounded-md font-semibold text-sm text-indigo-600 uppercase tracking-widest hover:bg-gray-100 focus:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 transition ease-in-out duration-150">
         Get Started Today
     </a>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.public', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\jjsr1\OneDrive\Desktop\4. PHP\roomiematch\resources\views/home.blade.php ENDPATH**/ ?>
