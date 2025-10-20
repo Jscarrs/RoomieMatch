@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - RoomieMatch</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
 </head>
 <body class="min-h-screen flex items-center justify-center bg-gray-900 text-white">
 
@@ -18,8 +18,8 @@
         </div>
 
         <!-- Form -->
-        <form method="POST" action="{{ route('register') }}" class="space-y-5">
-            @csrf
+        <form method="POST" action="<?php echo e(route('register')); ?>" class="space-y-5">
+            <?php echo csrf_field(); ?>
 
             <!-- Name -->
             <div>
@@ -61,7 +61,7 @@
         <!-- Footer -->
         <div class="text-center text-sm text-gray-400">
             Already have an account?
-            <a href="{{ route('login') }}" class="text-indigo-400 hover:text-indigo-300 font-medium">
+            <a href="<?php echo e(route('login')); ?>" class="text-indigo-400 hover:text-indigo-300 font-medium">
                 Log in
             </a>
         </div>
@@ -69,3 +69,4 @@
 
 </body>
 </html>
+<?php /**PATH C:\Users\jjsr1\OneDrive\Desktop\4. PHP\roomiematch\resources\views/auth/register.blade.php ENDPATH**/ ?>
