@@ -9,7 +9,7 @@ It provides a clean, responsive interface and uses Laravel’s expressive syntax
 
 -   Scarlett Jet
 -   Rajkamal Singh
--   Joe Kwaku Ghartey Appiah1
+-   Joe Kwaku Ghartey Appiah
 -   Divjit Singh
 
 ---
