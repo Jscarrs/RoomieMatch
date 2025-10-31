@@ -98,7 +98,6 @@
             <li>🕒 Admin reset password for Rajkamal Singh</li>
             <li>🕒 Joe Appiah updated his profile</li>
         </ul>
-        <p class="text-gray-500 text-sm mt-2">(*Static sample — you can link this to real logs later using Laravel’s events or database.)</p>
     </div>
 
 </div>
