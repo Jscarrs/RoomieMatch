@@ -57,18 +57,26 @@
                   </div>
 
                 <!-- Property Type -->
-                <div>
-                    <label class="block text-sm font-medium mb-1">Property Type</label>
-                    <select name="property_type"
-                            class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-gray-100 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                        <option value="">Select Property Type</option>
-                        <option value="Apartment">Apartment</option>
-                        <option value="Basement">Basement</option>
-                        <option value="Shared Room">Shared Room</option>
-                        <option value="Private Room">Private Room</option>
-                    </select>
-                </div>
+                  <div>
+                      <label class="block text-sm font-medium mb-1">Property Type</label>
+                      <select name="property_type"
+                              class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-gray-100 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                              required>
+                          <option value="">Select Property Type</option>
+                          <option value="Apartment">Apartment</option>
+                          <option value="House">House</option>
+                      </select>
+                  </div>
 
+                <!-- Number of Bathrooms -->
+                <div>
+                    <label class="block text-sm font-medium mb-1">Number of Bathrooms</label>
+                    <input type="number" name="bathrooms" value="{{ old('bathrooms') }}"
+                          class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-gray-100 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                          placeholder="e.g., 2"
+                          min="1" step="0.5" required>
+                </div>
+                
                 <!-- Checkboxes -->
                 <div class="flex flex-wrap gap-4">
                     <label class="flex items-center space-x-2">

@@ -24,6 +24,9 @@ return new class extends Migration
             $table->boolean('ensuite_washroom')->default(false);
             $table->string('property_type')->default('apartment'); // apartment or house
 
+            // ✅ Number of bathrooms (supports 1, 1.5, 2, etc.)
+            $table->decimal('bathrooms', 2, 1)->nullable();
+
             // ✅ New column for photo storage (multiple file paths as JSON)
             $table->json('photos')->nullable();
 

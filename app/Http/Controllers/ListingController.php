@@ -15,6 +15,7 @@ class ListingController extends Controller
     {
         $query = Listing::query();
 
+        // Optional filters
         if ($request->filled('lease_type')) {
             $query->where('lease_type', $request->lease_type);
         }
@@ -63,9 +64,11 @@ class ListingController extends Controller
             'price' => 'required|numeric|min:0',
             'lease_type' => 'required|string',
             'property_type' => 'required|string',
+            'bathrooms' => 'nullable|numeric|min:0|max:10',
             'description' => 'nullable|string',
             'ensuite_washroom' => 'boolean',
             'pet_friendly' => 'boolean',
+            'photos' => 'nullable|json', // future-ready
         ]);
 
         $validated['user_id'] = Auth::id();
@@ -84,7 +87,7 @@ class ListingController extends Controller
     }
 
     /**
-     * Placeholder for edit/update/destroy (optional for now)
+     * Edit listing (for later use)
      */
     public function edit(Listing $listing)
     {
@@ -93,11 +96,27 @@ class ListingController extends Controller
 
     public function update(Request $request, Listing $listing)
     {
-        // Implementation later
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'lease_type' => 'required|string',
+            'property_type' => 'required|string',
+            'bathrooms' => 'nullable|numeric|min:0|max:10',
+            'description' => 'nullable|string',
+            'ensuite_washroom' => 'boolean',
+            'pet_friendly' => 'boolean',
+            'photos' => 'nullable|json',
+        ]);
+
+        $listing->update($validated);
+
+        return redirect()->route('listings.index')->with('success', 'Listing updated successfully!');
     }
 
     public function destroy(Listing $listing)
     {
-        // Implementation later
+        $listing->delete();
+        return redirect()->route('listings.index')->with('success', 'Listing deleted successfully!');
     }
 }
