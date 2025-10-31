@@ -2,63 +2,48 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Listing;
 use Illuminate\Http\Request;
 
 class ListingController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a list of listings with filters.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('listings.index');
-    }
+        $query = Listing::query();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('listings.create');
-    }
+        // Optional filters
+        if ($request->filled('lease_type')) {
+            $query->where('lease_type', $request->lease_type);
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        if ($request->filled('property_type')) {
+            $query->where('property_type', $request->property_type);
+        }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        if ($request->boolean('ensuite_washroom')) {
+            $query->where('ensuite_washroom', true);
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        if ($request->boolean('pet_friendly')) {
+            $query->where('pet_friendly', true);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        // Price filtering
+        if ($request->filled('min_price')) {
+            $query->where('price', '>=', $request->min_price);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        if ($request->filled('max_price')) {
+            $query->where('price', '<=', $request->max_price);
+        }
+
+        // Fetch latest listings
+        $listings = $query->latest()->paginate(10);
+
+        // Return view
+        return view('listings.index', compact('listings'));
     }
 }
