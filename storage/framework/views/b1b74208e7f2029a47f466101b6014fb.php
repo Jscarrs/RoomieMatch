@@ -14,26 +14,16 @@
     <!-- Scripts -->
     <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
 </head>
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-        
+<body class="bg-gray-900 text-gray-100 font-sans antialiased">
+    <div class="min-h-screen flex flex-col">
         <?php echo $__env->make('layouts.navigation', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
-        
-        <?php if(isset($header)): ?>
-            <header class="bg-white dark:bg-gray-800 shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <?php echo e($header); ?>
-
-                </div>
-            </header>
-        <?php endif; ?>
-
-        
-        <main class="py-6">
+        <!-- Page Content -->
+        <main class="flex-1 py-10 px-4 sm:px-6 lg:px-8 bg-gray-900">
             <?php echo $__env->yieldContent('content'); ?>
         </main>
     </div>
 </body>
+
 </html>
 <?php /**PATH C:\Users\jjsr1\OneDrive\Desktop\4. PHP\roomiematch\resources\views/layouts/app.blade.php ENDPATH**/ ?>
