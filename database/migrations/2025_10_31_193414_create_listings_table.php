@@ -23,9 +23,13 @@ return new class extends Migration
             $table->boolean('pet_friendly')->default(false);
             $table->boolean('ensuite_washroom')->default(false);
             $table->string('property_type')->default('apartment'); // apartment or house
+
+            // ✅ New column for photo storage (multiple file paths as JSON)
+            $table->json('photos')->nullable();
+
             $table->timestamps();
 
-            // Foreign key constraint (manual style avoids timing issues)
+            // Foreign key constraint
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')

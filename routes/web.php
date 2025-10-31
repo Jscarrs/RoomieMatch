@@ -16,9 +16,17 @@ Route::view('/', 'home')->name('home');
 Route::view('/about', 'about')->name('about');
 Route::view('/contact', 'contact')->name('contact');
 
-// Public Listing Routes (anyone can browse listings)
+/*
+|--------------------------------------------------------------------------
+| Public Listing Routes
+|--------------------------------------------------------------------------
+| These are accessible without login. The show route must stay at the bottom
+| so it doesn’t override other “/listings/*” URLs like /listings/create.
+|--------------------------------------------------------------------------
+*/
+
+// Browse all listings
 Route::get('/listings', [ListingController::class, 'index'])->name('listings.index');
-Route::get('/listings/{listing}', [ListingController::class, 'show'])->name('listings.show');
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +40,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [UserDashboardController::class, 'index'])
         ->name('user.dashboard');
 
-    // Listings Management (Create, Edit, Delete)
+    // Listing Management (Create, Edit, Delete)
     Route::get('/listings/create', [ListingController::class, 'create'])->name('listings.create');
     Route::post('/listings', [ListingController::class, 'store'])->name('listings.store');
     Route::get('/listings/{listing}/edit', [ListingController::class, 'edit'])->name('listings.edit');
@@ -47,11 +55,19 @@ Route::middleware(['auth'])->group(function () {
 
 /*
 |--------------------------------------------------------------------------
+| Public "Show Listing" Route
+|--------------------------------------------------------------------------
+| Placed after the auth group to avoid collisions with /listings/create or edit.
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/listings/{listing}', [ListingController::class, 'show'])->name('listings.show');
+
+/*
+|--------------------------------------------------------------------------
 | Admin Pages & User Management
 |--------------------------------------------------------------------------
-|
 | All admin-specific routes are protected by authentication.
-| You can later add an "is_admin" middleware to restrict access further.
 |--------------------------------------------------------------------------
 */
 
