@@ -44,16 +44,17 @@
                 </div>
 
                 <!-- Lease Type -->
-                <div>
-                    <label class="block text-sm font-medium mb-1">Lease Type</label>
-                    <select name="lease_type"
-                            class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-gray-100 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                        <option value="">Select Lease Type</option>
-                        <option value="Month-to-Month">Month-to-Month</option>
-                        <option value="6 Months">6 Months</option>
-                        <option value="1 Year">1 Year</option>
-                    </select>
-                </div>
+                  <div>
+                      <label class="block text-sm font-medium mb-1">Lease Type</label>
+                      <select name="lease_type"
+                          class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-gray-100 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                          required>
+                          <option value="">Select Lease Type</option>
+                          <option value="4-month">4 Months</option>
+                          <option value="8-month">8 Months</option>
+                          <option value="1-year">1 Year</option>
+                      </select>
+                  </div>
 
                 <!-- Property Type -->
                 <div>
