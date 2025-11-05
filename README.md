@@ -34,3 +34,12 @@ php artisan serve
 ```
 
 http://127.0.0.1:8000/
+
+Login Credentials:
+Admin:
+admin@roomiematch
+admin
+
+Test User:
+test@roomiematch.com
+
