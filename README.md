@@ -1,45 +1,39 @@
 # 🏠 RoomieMatch
 
-RoomieMatch is a Laravel-based web application designed to help users find compatible roommates efficiently.  
-It provides a clean, responsive interface and uses Laravel’s expressive syntax for fast and maintainable development.
+RoomieMatch is a Laravel-based web application designed to help students find off-campus housing and compatible roommates efficiently.  
+It provides a clean, dark-themed interface with features like listing creation, filtering, and user authentication.  
+Built using **Laravel**, **Tailwind CSS**, and **Vite**, the project emphasizes simplicity, performance, and maintainability.
 
 ---
 
 ## 👥 Team PHPandas
 
--   Scarlett Jet
--   Rajkamal Singh
--   Joe Kwaku Ghartey Appiah new
--   Divjit Singh
+- Scarlett Jet  
+- Rajkamal Singh  
+- Joe Kwaku Ghartey Appiah  
+- Divjit Singh  
 
 ---
 
 ## 🚀 Tech Stack
 
--   **Backend:** Laravel (PHP)
--   **Frontend:** Blade / JavaScript
--   **Database:** MySQL
--   **Version Control:** Git & GitHub
+| Layer | Technology |
+|-------|-------------|
+| **Backend** | Laravel (PHP 8+) |
+| **Frontend** | Blade Templates + Tailwind CSS + Vite |
+| **Database** | MySQL |
+| **Version Control** | Git & GitHub |
 
 ---
 
 ## ⚙️ Setup Instructions
 
+Follow these steps to set up the project on your local machine.
+
+---
+
+### 1️⃣ Clone the Repository
 ```bash
-composer install
-npm install
-cp .env.example .env
-php artisan key:generate
-php artisan serve
-```
-
-http://127.0.0.1:8000/
-
-Login Credentials:
-Admin:
-admin@roomiematch
-admin
-
-Test User:
-test@roomiematch.com
+git clone https://github.com/<your-username>/roomiematch.git
+cd roomiematch
 
