@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Listing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ListingController extends Controller
 {
@@ -68,10 +69,16 @@ class ListingController extends Controller
             'description' => 'nullable|string',
             'ensuite_washroom' => 'boolean',
             'pet_friendly' => 'boolean',
-            'photos' => 'nullable|json', // future-ready
+            'photo' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048', // ✅ File validation
         ]);
 
         $validated['user_id'] = Auth::id();
+
+        // ✅ Handle photo upload
+        if ($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('listings', 'public');
+            $validated['photos'] = json_encode([$path]); // Store path in JSON format
+        }
 
         Listing::create($validated);
 
@@ -87,13 +94,16 @@ class ListingController extends Controller
     }
 
     /**
-     * Edit listing (for later use)
+     * Show the form for editing a listing.
      */
     public function edit(Listing $listing)
     {
         return view('listings.edit', compact('listing'));
     }
 
+    /**
+     * Update a listing.
+     */
     public function update(Request $request, Listing $listing)
     {
         $validated = $request->validate([
@@ -106,16 +116,42 @@ class ListingController extends Controller
             'description' => 'nullable|string',
             'ensuite_washroom' => 'boolean',
             'pet_friendly' => 'boolean',
-            'photos' => 'nullable|json',
+            'photo' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
+
+        // ✅ Handle optional photo update
+        if ($request->hasFile('photo')) {
+            // Delete old photo if exists
+            if ($listing->photos) {
+                $oldPhotos = json_decode($listing->photos, true);
+                foreach ($oldPhotos as $oldPhoto) {
+                    Storage::disk('public')->delete($oldPhoto);
+                }
+            }
+
+            // Store new photo
+            $path = $request->file('photo')->store('listings', 'public');
+            $validated['photos'] = json_encode([$path]);
+        }
 
         $listing->update($validated);
 
         return redirect()->route('listings.index')->with('success', 'Listing updated successfully!');
     }
 
+    /**
+     * Delete a listing.
+     */
     public function destroy(Listing $listing)
     {
+        // ✅ Delete stored image when listing is deleted
+        if ($listing->photos) {
+            $photos = json_decode($listing->photos, true);
+            foreach ($photos as $photo) {
+                Storage::disk('public')->delete($photo);
+            }
+        }
+
         $listing->delete();
         return redirect()->route('listings.index')->with('success', 'Listing deleted successfully!');
     }

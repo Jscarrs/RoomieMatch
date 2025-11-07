@@ -26,15 +26,28 @@
             <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach($listings as $listing)
                     <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 shadow hover:border-emerald-500 transition">
-                        <div class="aspect-[4/3] bg-gray-700 rounded-lg mb-4 flex items-center justify-center">
-                            <span class="text-gray-500 text-sm">No image</span>
-                        </div>
 
+                        <!-- ✅ Listing Image -->
+                        @if ($listing->photos && count(json_decode($listing->photos, true)) > 0)
+                            <img src="{{ asset('storage/' . json_decode($listing->photos, true)[0]) }}"
+                                 alt="Listing Photo"
+                                 class="rounded-lg w-full h-48 object-cover mb-4">
+                        @else
+                            <div class="aspect-[4/3] bg-gray-700 rounded-lg mb-4 flex items-center justify-center">
+                                <span class="text-gray-500 text-sm">No image</span>
+                            </div>
+                        @endif
+
+                        <!-- Title -->
                         <h2 class="text-xl font-semibold text-white mb-1">{{ $listing->title }}</h2>
                         <p class="text-gray-400 text-sm mb-2">{{ Str::limit($listing->address, 50) }}</p>
 
-                        <p class="text-emerald-400 font-bold text-lg mb-4">${{ number_format($listing->price) }}/month</p>
+                        <!-- Price -->
+                        <p class="text-emerald-400 font-bold text-lg mb-4">
+                            ${{ number_format($listing->price) }}/month
+                        </p>
 
+                        <!-- Badges -->
                         <div class="flex flex-wrap gap-2 mb-4">
                             @if ($listing->ensuite_washroom)
                                 <span class="bg-gray-700 px-2 py-1 rounded-full text-xs text-gray-300">Ensuite</span>
@@ -47,6 +60,7 @@
                             @endif
                         </div>
 
+                        <!-- Button -->
                         <a href="{{ route('listings.show', $listing) }}"
                            class="block text-center bg-emerald-600 text-white py-2 rounded-lg hover:bg-emerald-700 transition">
                             View Details
@@ -55,6 +69,7 @@
                 @endforeach
             </div>
 
+            <!-- Pagination -->
             <div class="mt-8">
                 {{ $listings->links() }}
             </div>
