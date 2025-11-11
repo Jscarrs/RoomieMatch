@@ -11,7 +11,7 @@
 
     <!-- Contact Form -->
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
-        <form action="#" method="POST" class="space-y-6">
+        <form action="{{ route('contact.submit') }}" method="POST" class="space-y-6">
             @csrf
             
             <!-- Full Name -->
@@ -71,11 +71,13 @@
         </form>
 
         <!-- Success Message (hidden by default) -->
-        <div id="success-message" class="hidden mt-6 p-4 bg-green-100 dark:bg-green-900 border border-green-400 dark:border-green-600 rounded-lg">
-            <p class="text-green-700 dark:text-green-200 font-medium">
-                ✓ Your message has been sent successfully!
-            </p>
-        </div>
+        @if(session('success'))
+            <div class="mt-6 p-4 bg-green-100 dark:bg-green-900 border border-green-400 dark:border-green-600 rounded-lg">
+                <p class="text-green-700 dark:text-green-200 font-medium">
+                  Check: {{ session('success') }}
+                </p>
+            </div>
+        @endif
     </div>
 
     <!-- Contact Info Cards -->

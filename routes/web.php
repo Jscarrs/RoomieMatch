@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\ListingController;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +15,27 @@ use App\Http\Controllers\ListingController;
 
 Route::view('/', 'home')->name('home');
 Route::view('/about', 'about')->name('about');
-Route::view('/contact', 'contact')->name('contact');
+
+
+// GET: Show contact form
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+
+// POST: Handle form submission
+Route::post('/contact', function (Request $request) 
+{
+    $validated = $request->validate([
+        'name'    => 'required|string|max:255',
+        'email'   => 'required|email',
+        'message' => 'required|string|min:10',
+    ]);
+
+    // Here you would typically send an email or store the message in the database.
+    return redirect()
+        ->route('contact')
+        ->with('success', 'Your message has been sent successfully!');
+})->name('contact.submit');
 
 /*
 |--------------------------------------------------------------------------
