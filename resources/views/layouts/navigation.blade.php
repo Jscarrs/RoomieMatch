@@ -1,11 +1,17 @@
 <nav x-data="{ open: false }" class="bg-gray-900 border-b border-gray-800">
+    @php
+        $isAdmin = Auth::check() && Auth::user()->is_admin;
+        $dashboardRoute = $isAdmin ? route('admin.dashboard') : route('user.dashboard');
+        $dashboardActive = $isAdmin ? request()->routeIs('admin.dashboard') : request()->routeIs('user.dashboard');
+    @endphp
+
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex items-center">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('user.dashboard') }}">
+                    <a href="{{ $dashboardRoute }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-emerald-400" />
                     </a>
                 </div>
@@ -14,10 +20,9 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <!-- Dashboard -->
                     <x-nav-link 
-                        :href="route('admin.dashboard')" 
-                        :active="request()->routeIs('user.dashboard')" 
-                        class="text-gray-300 hover:text-emerald-400"
-                    >
+                        :href="$dashboardRoute" 
+                        :active="$dashboardActive" 
+                        class="text-gray-300 hover:text-emerald-400">
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
@@ -25,8 +30,7 @@
                     <x-nav-link 
                         :href="route('listings.index')" 
                         :active="request()->routeIs('listings.*')" 
-                        class="text-gray-300 hover:text-emerald-400"
-                    >
+                        class="text-gray-300 hover:text-emerald-400">
                         {{ __('Listings') }}
                     </x-nav-link>
                 </div>
@@ -87,8 +91,8 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-gray-900 border-t border-gray-800">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link 
-                :href="route('user.dashboard')" 
-                :active="request()->routeIs('user.dashboard')">
+                :href="$dashboardRoute" 
+                :active="$dashboardActive">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
