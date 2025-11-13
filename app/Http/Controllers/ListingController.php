@@ -65,6 +65,7 @@ class ListingController extends Controller
             'price' => 'required|numeric|min:0',
             'lease_type' => 'required|string',
             'property_type' => 'required|string',
+            'gender_preference' => 'required|string|in:Male,Female,Coed', // ✅ Added field
             'bathrooms' => 'nullable|numeric|min:0|max:10',
             'description' => 'nullable|string',
             'ensuite_washroom' => 'boolean',
@@ -112,6 +113,7 @@ class ListingController extends Controller
             'price' => 'required|numeric|min:0',
             'lease_type' => 'required|string',
             'property_type' => 'required|string',
+            'gender_preference' => 'required|string|in:Male,Female,Coed', // ✅ Added field
             'bathrooms' => 'nullable|numeric|min:0|max:10',
             'description' => 'nullable|string',
             'ensuite_washroom' => 'boolean',

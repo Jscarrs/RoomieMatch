@@ -74,6 +74,21 @@
                     </select>
                 </div>
 
+                <!-- Gender Preference -->
+                <div>
+                    <label class="block text-sm font-medium mb-1">Gender Preference</label>
+                    <select name="gender_preference"
+                            class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-gray-100
+                                focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                            required>
+                        <option value="">Select Gender Preference</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Coed">Coed / Mixed</option>
+                    </select>
+                </div>
+
+
                 <!-- Number of Bathrooms -->
                 <div>
                     <label class="block text-sm font-medium mb-1">Number of Bathrooms</label>

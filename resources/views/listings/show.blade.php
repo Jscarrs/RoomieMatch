@@ -5,7 +5,7 @@
     <div class="max-w-5xl mx-auto px-6">
         <div class="bg-gray-800 rounded-2xl shadow-lg p-8 flex flex-col md:flex-row gap-8">
 
-            <!-- ✅ Listing Image -->
+            <!-- Listing Image -->
             <div class="md:w-1/2">
                 @if ($listing->photos && count(json_decode($listing->photos, true)) > 0)
                     <img src="{{ asset('storage/' . json_decode($listing->photos, true)[0]) }}"
@@ -18,7 +18,7 @@
                 @endif
             </div>
 
-            <!-- ✅ Listing Info -->
+            <!-- Listing Info -->
             <div class="md:w-1/2 flex flex-col justify-between">
                 <div>
                     <h1 class="text-3xl font-bold mb-2">{{ $listing->title }}</h1>
@@ -41,7 +41,18 @@
                         @if ($listing->pet_friendly)
                             <span class="bg-gray-700 px-3 py-1 rounded-full text-xs">Pet Friendly</span>
                         @endif
+                        @if ($listing->gender_preference)
+                            <span class="bg-gray-700 px-3 py-1 rounded-full text-xs">
+                                {{ $listing->gender_preference }}
+                            </span>
+                        @endif
                     </div>
+
+                    <!-- ✅ Gender Preference (detailed line view) -->
+                    <p class="text-gray-300 mb-4">
+                        <strong>Gender Preference:</strong>
+                        {{ $listing->gender_preference ?? 'Not specified' }}
+                    </p>
 
                     <h2 class="text-lg font-semibold mb-1">Description</h2>
                     <p class="text-gray-300 mb-6">

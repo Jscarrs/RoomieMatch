@@ -9,7 +9,7 @@ class Listing extends Model
 {
     use HasFactory;
 
-    // ✅ Add this to allow mass assignment
+    
     protected $fillable = [
         'user_id',
         'title',
@@ -18,6 +18,7 @@ class Listing extends Model
         'price',
         'lease_type',
         'property_type',
+        'gender_preference',
         'ensuite_washroom',
         'pet_friendly',
         'bathrooms',

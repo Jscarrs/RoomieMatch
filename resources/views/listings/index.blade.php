@@ -27,7 +27,7 @@
                 @foreach($listings as $listing)
                     <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 shadow hover:border-emerald-500 transition">
 
-                        <!-- ✅ Listing Image -->
+                        <!-- Listing Image -->
                         @if ($listing->photos && count(json_decode($listing->photos, true)) > 0)
                             <img src="{{ asset('storage/' . json_decode($listing->photos, true)[0]) }}"
                                  alt="Listing Photo"
@@ -57,6 +57,11 @@
                             @endif
                             @if ($listing->lease_type)
                                 <span class="bg-gray-700 px-2 py-1 rounded-full text-xs text-gray-300">{{ $listing->lease_type }}</span>
+                            @endif
+                            @if ($listing->gender_preference)
+                                <span class="bg-gray-700 px-2 py-1 rounded-full text-xs text-gray-300">
+                                    {{ $listing->gender_preference }}
+                                </span>
                             @endif
                         </div>
 
