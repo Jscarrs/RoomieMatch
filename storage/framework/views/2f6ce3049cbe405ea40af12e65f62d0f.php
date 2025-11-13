@@ -16,7 +16,6 @@
                 </div>
             <?php endif; ?>
 
-            <!-- Added enctype for image uploads -->
             <form method="POST" action="<?php echo e(route('listings.store')); ?>" enctype="multipart/form-data" class="space-y-6">
                 <?php echo csrf_field(); ?>
 
@@ -24,8 +23,7 @@
                 <div>
                     <label class="block text-sm font-medium mb-1">Title</label>
                     <input type="text" name="title" value="<?php echo e(old('title')); ?>"
-                           class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 
-                                  focus:ring-2 focus:ring-emerald-500 focus:outline-none text-gray-100"
+                           class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:ring-2 focus:ring-emerald-500 focus:outline-none text-gray-100"
                            placeholder="Spacious 2 Bedroom Apartment near Humber College" required>
                 </div>
 
@@ -33,8 +31,7 @@
                 <div>
                     <label class="block text-sm font-medium mb-1">Address</label>
                     <input type="text" name="address" value="<?php echo e(old('address')); ?>"
-                           class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 
-                                  focus:ring-2 focus:ring-emerald-500 focus:outline-none text-gray-100"
+                           class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:ring-2 focus:ring-emerald-500 focus:outline-none text-gray-100"
                            placeholder="123 Main Street, Toronto, ON" required>
                 </div>
 
@@ -42,8 +39,7 @@
                 <div>
                     <label class="block text-sm font-medium mb-1">Price (per month)</label>
                     <input type="number" name="price" value="<?php echo e(old('price')); ?>"
-                           class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 
-                                  focus:ring-2 focus:ring-emerald-500 focus:outline-none text-gray-100"
+                           class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:ring-2 focus:ring-emerald-500 focus:outline-none text-gray-100"
                            placeholder="1350" required>
                 </div>
 
@@ -51,9 +47,8 @@
                 <div>
                     <label class="block text-sm font-medium mb-1">Lease Type</label>
                     <select name="lease_type"
-                        class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-gray-100 
-                               focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                        required>
+                            class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-gray-100 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                            required>
                         <option value="">Select Lease Type</option>
                         <option value="4-month">4 Months</option>
                         <option value="8-month">8 Months</option>
@@ -65,12 +60,13 @@
                 <div>
                     <label class="block text-sm font-medium mb-1">Property Type</label>
                     <select name="property_type"
-                            class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-gray-100 
-                                   focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                            class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-gray-100 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                             required>
                         <option value="">Select Property Type</option>
                         <option value="Apartment">Apartment</option>
                         <option value="House">House</option>
+                        <option value="Basement">Basement</option>
+                        <option value="Condo">Condo</option>
                     </select>
                 </div>
 
@@ -78,8 +74,7 @@
                 <div>
                     <label class="block text-sm font-medium mb-1">Gender Preference</label>
                     <select name="gender_preference"
-                            class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-gray-100
-                                focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                            class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-gray-100 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                             required>
                         <option value="">Select Gender Preference</option>
                         <option value="Male">Male</option>
@@ -88,17 +83,15 @@
                     </select>
                 </div>
 
-
                 <!-- Number of Bathrooms -->
                 <div>
-                    <label class="block text-sm font-medium mb-1">Number of Bathrooms</label>
+                    <label class="block text-sm font-medium mb-1">Number of Bathrooms (optional)</label>
                     <input type="number" name="bathrooms" value="<?php echo e(old('bathrooms')); ?>"
-                          class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-gray-100 
-                                 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                          placeholder="e.g., 2"
-                          min="1" step="0.5" required>
+                           class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-gray-100 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                           placeholder="e.g., 2"
+                           min="0" step="0.5">
                 </div>
-                
+
                 <!-- Checkboxes -->
                 <div class="flex flex-wrap gap-4">
                     <label class="flex items-center space-x-2">
@@ -116,26 +109,22 @@
                 <div>
                     <label class="block text-sm font-medium mb-1">Description</label>
                     <textarea name="description" rows="4"
-                              class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 
-                                     focus:ring-2 focus:ring-emerald-500 focus:outline-none text-gray-100"
+                              class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:ring-2 focus:ring-emerald-500 focus:outline-none text-gray-100"
                               placeholder="Describe the space, nearby transit, roommates, etc."><?php echo e(old('description')); ?></textarea>
                 </div>
 
-                <!-- Photo Upload -->
+                <!-- Upload Photo -->
                 <div>
                     <label class="block text-sm font-medium mb-1">Upload Photo</label>
-                    <input type="file" name="photo"
-                           class="w-full text-gray-100 bg-gray-700 border border-gray-600 rounded-lg cursor-pointer 
-                                  focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                           accept="image/*">
-                    <p class="text-xs text-gray-400 mt-1">Supported formats: JPG, PNG, GIF (Max: 2MB)</p>
+                    <input type="file" name="photo" accept="image/*"
+                           class="block w-full text-sm text-gray-300 bg-gray-700 border border-gray-600 rounded-lg cursor-pointer focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    <p class="text-xs text-gray-500 mt-1">Supported formats: JPG, PNG, GIF (Max: 2MB)</p>
                 </div>
 
                 <!-- Submit -->
                 <div class="text-center">
                     <button type="submit"
-                            class="px-6 py-2 bg-emerald-600 text-white font-semibold rounded-lg 
-                                   hover:bg-emerald-700 focus:ring-2 focus:ring-emerald-500 transition">
+                            class="px-6 py-2 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 focus:ring-2 focus:ring-emerald-500 transition">
                         Publish Listing
                     </button>
                 </div>

@@ -28,6 +28,13 @@
                         ${{ number_format($listing->price) }} <span class="text-sm text-gray-400">/month</span>
                     </p>
 
+                    <!-- Bathrooms (optional display) -->
+                    @if ($listing->bathrooms)
+                        <p class="text-gray-300 mb-2">
+                            <strong>Bathrooms:</strong> {{ rtrim(rtrim($listing->bathrooms, '0'), '.') }}
+                        </p>
+                    @endif
+
                     <div class="flex flex-wrap gap-2 mb-4">
                         @if ($listing->lease_type)
                             <span class="bg-gray-700 px-3 py-1 rounded-full text-xs">{{ $listing->lease_type }}</span>
@@ -48,19 +55,13 @@
                         @endif
                     </div>
 
-                    <!-- ✅ Gender Preference (detailed line view) -->
-                    <p class="text-gray-300 mb-4">
-                        <strong>Gender Preference:</strong>
-                        {{ $listing->gender_preference ?? 'Not specified' }}
-                    </p>
-
                     <h2 class="text-lg font-semibold mb-1">Description</h2>
                     <p class="text-gray-300 mb-6">
                         {{ $listing->description ?? 'No description provided.' }}
                     </p>
 
                     <p class="text-sm text-gray-500">
-                        Listed by: 
+                        Listed by:
                         <span class="text-gray-300 font-medium">
                             {{ $listing->user->name ?? 'Unknown User' }}
                         </span>
