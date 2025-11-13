@@ -6,40 +6,32 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
         Schema::create('listings', function (Blueprint $table) {
             $table->id();
-
-            // Relationship
-            $table->unsignedBigInteger('user_id');
-
-            // Listing details
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->string('address')->nullable();
-            $table->decimal('price', 8, 2)->nullable();
-            $table->string('lease_type')->nullable(); // e.g., 4-month, 8-month, lease
-            $table->boolean('pet_friendly')->default(false);
+            $table->string('address');
+            $table->decimal('price', 10, 2);
+            $table->string('lease_type');
+            $table->string('property_type');
+            $table->enum('gender_preference', ['Male', 'Female', 'Coed']);
             $table->boolean('ensuite_washroom')->default(false);
-            $table->string('property_type')->default('apartment'); // apartment or house
-
-            // ✅ Number of bathrooms (supports 1, 1.5, 2, etc.)
-            $table->decimal('bathrooms', 2, 1)->nullable();
-
-            // ✅ New column for photo storage (multiple file paths as JSON)
+            $table->boolean('pet_friendly')->default(false);
+            $table->decimal('bathrooms', 3, 1)->nullable();
             $table->json('photos')->nullable();
-
             $table->timestamps();
-
-            // Foreign key constraint
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::dropIfExists('listings');
