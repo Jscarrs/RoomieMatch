@@ -31,15 +31,21 @@ class AdminDashboardController extends Controller
     }
 
     public function updateRole(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
+{
+    $request->validate([
+        'role' => ['required', 'in:user,admin'],
+    ]);
 
-        // Convert dropdown text to boolean
-        $user->is_admin = $request->role === 'Admin';
-        $user->save();
+    $user = User::findOrFail($id);
 
-        return back()->with('success', "{$user->name}'s role has been updated.");
-    }
+    // Set is_admin based on selected role
+    $user->is_admin = $request->role === 'admin' ? 1 : 0;
+    $user->save();
+
+    return back()->with('success', "{$user->name}'s admin status has been updated.");
+}
+
+
 
 
     public function destroy($id)
