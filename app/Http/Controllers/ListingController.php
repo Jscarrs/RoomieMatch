@@ -119,7 +119,7 @@ class ListingController extends Controller
             'photo' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
 
-        // ✅ Handle optional photo update
+        // Handle optional photo update
         if ($request->hasFile('photo')) {
             // Delete old photo if exists
             if ($listing->photos) {

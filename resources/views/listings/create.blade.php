@@ -16,7 +16,7 @@
                 </div>
             @endif
 
-            <!-- ✅ Added enctype for image uploads -->
+            <!-- Added enctype for image uploads -->
             <form method="POST" action="{{ route('listings.store') }}" enctype="multipart/form-data" class="space-y-6">
                 @csrf
 
@@ -106,7 +106,7 @@
                               placeholder="Describe the space, nearby transit, roommates, etc.">{{ old('description') }}</textarea>
                 </div>
 
-                <!-- ✅ Photo Upload -->
+                <!-- Photo Upload -->
                 <div>
                     <label class="block text-sm font-medium mb-1">Upload Photo</label>
                     <input type="file" name="photo"

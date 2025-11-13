@@ -16,7 +16,7 @@
                 </div>
             <?php endif; ?>
 
-            <!-- ✅ Added enctype for image uploads -->
+            <!-- Added enctype for image uploads -->
             <form method="POST" action="<?php echo e(route('listings.store')); ?>" enctype="multipart/form-data" class="space-y-6">
                 <?php echo csrf_field(); ?>
 
@@ -106,7 +106,7 @@
                               placeholder="Describe the space, nearby transit, roommates, etc."><?php echo e(old('description')); ?></textarea>
                 </div>
 
-                <!-- ✅ Photo Upload -->
+                <!-- Photo Upload -->
                 <div>
                     <label class="block text-sm font-medium mb-1">Upload Photo</label>
                     <input type="file" name="photo"
