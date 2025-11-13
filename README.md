@@ -10,7 +10,7 @@ Built using **Laravel**, **Tailwind CSS**, and **Vite**, the project emphasizes 
 
 - Scarlett Jet  
 - Rajkamal Singh  
-- Joe Kwaku Ghartey Appiah  
+- Joe Kwaku Ghartey   
 - Divjit Singh  
 
 ---
