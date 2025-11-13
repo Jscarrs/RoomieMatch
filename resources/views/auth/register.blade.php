@@ -1,71 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - RoomieMatch</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="min-h-screen flex items-center justify-center bg-gray-900 text-white">
-
-    <div class="w-full max-w-md bg-gray-800 shadow-lg rounded-2xl p-8 space-y-6">
-        <!-- Header -->
-        <div class="text-center space-y-1">
-            <h1 class="text-3xl font-extrabold text-indigo-400">Create an Account</h1>
-            <p class="text-gray-400 text-sm">
-                Join RoomieMatch and find your perfect roommate today!
-            </p>
+<x-guest-layout>
+    <div class="w-full max-w-md bg-gray-800 text-white rounded-2xl shadow-xl p-8 mx-auto">
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-indigo-400">Create an Account</h1>
+            <p class="text-gray-400 mt-1 text-sm">Sign up for RoomieMatch</p>
         </div>
 
-        <!-- Form -->
+        <!-- Registration Errors -->
+        @if ($errors->any())
+            <div class="mb-4 bg-red-100 text-red-700 p-2 rounded">
+                <strong>Registration failed:</strong>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form method="POST" action="{{ route('register') }}" class="space-y-5">
             @csrf
 
             <!-- Name -->
             <div>
-                <label for="name" class="block text-sm font-medium text-gray-300">Full Name</label>
-                <input id="name" name="name" type="text" required autofocus autocomplete="name"
-                    class="block mt-1 w-full rounded-md border-gray-600 bg-gray-900 text-white focus:border-indigo-500 focus:ring-indigo-500" />
+                <x-input-label for="name" :value="__('Name')" class="text-gray-300" />
+                <x-text-input id="name" class="block mt-1 w-full bg-gray-700 border-gray-600 text-white rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                    type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                <x-input-error :messages="$errors->get('name')" class="mt-2 text-red-400" />
             </div>
 
             <!-- Email -->
             <div>
-                <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
-                <input id="email" name="email" type="email" required autocomplete="username"
-                    class="block mt-1 w-full rounded-md border-gray-600 bg-gray-900 text-white focus:border-indigo-500 focus:ring-indigo-500" />
+                <x-input-label for="email" :value="__('Email')" class="text-gray-300" />
+                <x-text-input id="email" class="block mt-1 w-full bg-gray-700 border-gray-600 text-white rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                    type="email" name="email" :value="old('email')" required autocomplete="email" />
+                <x-input-error :messages="$errors->get('email')" class="mt-2 text-red-400" />
             </div>
 
             <!-- Password -->
             <div>
-                <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
-                <input id="password" name="password" type="password" required autocomplete="new-password"
-                    class="block mt-1 w-full rounded-md border-gray-600 bg-gray-900 text-white focus:border-indigo-500 focus:ring-indigo-500" />
+                <x-input-label for="password" :value="__('Password')" class="text-gray-300" />
+                <x-text-input id="password" class="block mt-1 w-full bg-gray-700 border-gray-600 text-white rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                    type="password" name="password" required autocomplete="new-password" />
+                <x-input-error :messages="$errors->get('password')" class="mt-2 text-red-400" />
             </div>
 
-            <!-- Confirm Password -->
+            <!-- Password Confirmation -->
             <div>
-                <label for="password_confirmation" class="block text-sm font-medium text-gray-300">Confirm Password</label>
-                <input id="password_confirmation" name="password_confirmation" type="password" required autocomplete="new-password"
-                    class="block mt-1 w-full rounded-md border-gray-600 bg-gray-900 text-white focus:border-indigo-500 focus:ring-indigo-500" />
+                <x-input-label for="password_confirmation" :value="__('Confirm Password')" class="text-gray-300" />
+                <x-text-input id="password_confirmation" class="block mt-1 w-full bg-gray-700 border-gray-600 text-white rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                    type="password" name="password_confirmation" required autocomplete="new-password" />
+                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-red-400" />
             </div>
 
             <!-- Register Button -->
-            <div>
-                <button type="submit"
-                    class="w-full py-3 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-lg transition duration-150 ease-in-out shadow-md">
-                    Register
-                </button>
+            <div class="pt-4">
+                <x-primary-button class="w-full justify-center py-3 bg-indigo-600 hover:bg-indigo-500 focus:bg-indigo-700 rounded-lg">
+                    {{ __('Register') }}
+                </x-primary-button>
             </div>
         </form>
 
-        <!-- Footer -->
-        <div class="text-center text-sm text-gray-400">
+        <div class="text-center mt-6 text-sm text-gray-400">
             Already have an account?
-            <a href="{{ route('login') }}" class="text-indigo-400 hover:text-indigo-300 font-medium">
-                Log in
-            </a>
+            <a href="{{ route('login') }}" class="text-indigo-400 hover:text-indigo-300 font-medium">Log in</a>
         </div>
     </div>
-
-</body>
-</html>
+</x-guest-layout>

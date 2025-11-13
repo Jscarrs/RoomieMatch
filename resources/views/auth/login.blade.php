@@ -5,6 +5,13 @@
             <p class="text-gray-400 mt-1 text-sm">Sign in to continue to RoomieMatch</p>
         </div>
 
+        <!-- Registration Success Message -->
+        @if (session('success'))
+            <div class="mb-4 bg-green-100 text-green-700 p-2 rounded font-semibold">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <!-- Session Status -->
         <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -14,7 +21,7 @@
             <!-- Email Address -->
             <div>
                 <x-input-label for="email" :value="__('Email')" class="text-gray-300" />
-                <x-text-input id="email" class="block mt-1 w-full bg-gray-700 border-gray-600 text-white rounded-lg focus:ring-indigo-500 focus:border-indigo-500" 
+                <x-text-input id="email" class="block mt-1 w-full bg-gray-700 border-gray-600 text-white rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
                     type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
                 <x-input-error :messages="$errors->get('email')" class="mt-2 text-red-400" />
             </div>
@@ -31,14 +38,14 @@
             <div class="flex items-center justify-between mt-4">
                 <label for="remember_me" class="flex items-center">
                     <input id="remember_me" type="checkbox"
-                           class="rounded border-gray-600 bg-gray-800 text-indigo-500 shadow-sm focus:ring-indigo-500"
-                           name="remember">
+                        class="rounded border-gray-600 bg-gray-800 text-indigo-500 shadow-sm focus:ring-indigo-500"
+                        name="remember">
                     <span class="ms-2 text-sm text-gray-400">{{ __('Remember me') }}</span>
                 </label>
 
                 @if (Route::has('password.request'))
                     <a class="text-sm text-indigo-400 hover:text-indigo-300 transition-colors duration-200"
-                       href="{{ route('password.request') }}">
+                        href="{{ route('password.request') }}">
                         {{ __('Forgot password?') }}
                     </a>
                 @endif
