@@ -14,7 +14,7 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <!-- Dashboard -->
                     <x-nav-link 
-                        :href="route('user.dashboard')" 
+                        :href="route('admin.dashboard')" 
                         :active="request()->routeIs('user.dashboard')" 
                         class="text-gray-300 hover:text-emerald-400"
                     >
