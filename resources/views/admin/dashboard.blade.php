@@ -65,8 +65,8 @@
                                     @csrf
                                     @method('PATCH')
                                     <select name="role" onchange="this.form.submit()" class="bg-gray-900 border border-gray-700 rounded text-gray-300 text-sm px-2 py-1">
-                                        <option value="user" {{ $user->role === 'user' ? 'selected' : '' }}>User</option>
-                                        <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
+                                        <option value="user" {{ $user->is_admin == 0 ? 'selected' : '' }}>User</option>
+                                        <option value="admin" {{ $user->is_admin == 1 ? 'selected' : '' }}>Admin</option>
                                     </select>
                                 </form>
                             </td>
