@@ -16,7 +16,6 @@ class ListingController extends Controller
     {
         $query = Listing::query();
 
-        // Optional filters
         if ($request->filled('lease_type')) {
             $query->where('lease_type', $request->lease_type);
         }
@@ -77,7 +76,7 @@ class ListingController extends Controller
         $validated['ensuite_washroom'] = $request->has('ensuite_washroom');
         $validated['pet_friendly'] = $request->has('pet_friendly');
 
-        // Handle photo upload
+        // Handle image upload
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('listings', 'public');
             $validated['photos'] = json_encode([$path]);
@@ -134,14 +133,12 @@ class ListingController extends Controller
         $validated['ensuite_washroom'] = $request->has('ensuite_washroom');
         $validated['pet_friendly'] = $request->has('pet_friendly');
 
-        // Handle optional photo update
+        // Replace photo if new one uploaded
         if ($request->hasFile('photo')) {
             if ($listing->photos) {
                 $oldPhotos = json_decode($listing->photos, true);
                 foreach ($oldPhotos as $oldPhoto) {
-                    if (Storage::disk('public')->exists($oldPhoto)) {
-                        Storage::disk('public')->delete($oldPhoto);
-                    }
+                    Storage::disk('public')->delete($oldPhoto);
                 }
             }
 
@@ -167,13 +164,11 @@ class ListingController extends Controller
         if ($listing->photos) {
             $photos = json_decode($listing->photos, true);
             foreach ($photos as $photo) {
-                if (Storage::disk('public')->exists($photo)) {
-                    Storage::disk('public')->delete($photo);
-                }
+                Storage::disk('public')->delete($photo);
             }
         }
 
-        // Permanently delete listing
+        // Permanently delete record
         $listing->delete();
 
         return redirect()->route('listings.index')->with('success', 'Listing deleted successfully!');
