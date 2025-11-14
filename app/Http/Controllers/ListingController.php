@@ -9,10 +9,14 @@ use Illuminate\Support\Facades\Storage;
 
 class ListingController extends Controller
 {
+    /**
+     * Display listings with optional filters.
+     */
     public function index(Request $request)
     {
         $query = Listing::query();
 
+        // Optional filters
         if ($request->filled('lease_type')) {
             $query->where('lease_type', $request->lease_type);
         }
@@ -42,11 +46,17 @@ class ListingController extends Controller
         return view('listings.index', compact('listings'));
     }
 
+    /**
+     * Show form to create a new listing.
+     */
     public function create()
     {
         return view('listings.create');
     }
 
+    /**
+     * Store a newly created listing.
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -67,6 +77,7 @@ class ListingController extends Controller
         $validated['ensuite_washroom'] = $request->has('ensuite_washroom');
         $validated['pet_friendly'] = $request->has('pet_friendly');
 
+        // Handle photo upload
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('listings', 'public');
             $validated['photos'] = json_encode([$path]);
@@ -74,21 +85,38 @@ class ListingController extends Controller
 
         Listing::create($validated);
 
-        return redirect()->route('listings.index')->with('success', 'Listing created successfully.');
+        return redirect()->route('listings.index')->with('success', 'Listing created successfully!');
     }
 
+    /**
+     * Display a specific listing.
+     */
     public function show(Listing $listing)
     {
         return view('listings.show', compact('listing'));
     }
 
+    /**
+     * Show the form for editing a listing (owner only).
+     */
     public function edit(Listing $listing)
     {
+        if ($listing->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
         return view('listings.edit', compact('listing'));
     }
 
+    /**
+     * Update an existing listing (owner only).
+     */
     public function update(Request $request, Listing $listing)
     {
+        if ($listing->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'address' => 'required|string|max:255',
@@ -106,11 +134,14 @@ class ListingController extends Controller
         $validated['ensuite_washroom'] = $request->has('ensuite_washroom');
         $validated['pet_friendly'] = $request->has('pet_friendly');
 
+        // Handle optional photo update
         if ($request->hasFile('photo')) {
             if ($listing->photos) {
                 $oldPhotos = json_decode($listing->photos, true);
                 foreach ($oldPhotos as $oldPhoto) {
-                    Storage::disk('public')->delete($oldPhoto);
+                    if (Storage::disk('public')->exists($oldPhoto)) {
+                        Storage::disk('public')->delete($oldPhoto);
+                    }
                 }
             }
 
@@ -120,19 +151,31 @@ class ListingController extends Controller
 
         $listing->update($validated);
 
-        return redirect()->route('listings.index')->with('success', 'Listing updated successfully.');
+        return redirect()->route('listings.show', $listing)->with('success', 'Listing updated successfully!');
     }
 
+    /**
+     * Delete a listing (owner only).
+     */
     public function destroy(Listing $listing)
     {
+        if ($listing->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        // Delete photos from storage
         if ($listing->photos) {
             $photos = json_decode($listing->photos, true);
             foreach ($photos as $photo) {
-                Storage::disk('public')->delete($photo);
+                if (Storage::disk('public')->exists($photo)) {
+                    Storage::disk('public')->delete($photo);
+                }
             }
         }
 
+        // Permanently delete listing
         $listing->delete();
-        return redirect()->route('listings.index')->with('success', 'Listing deleted successfully.');
+
+        return redirect()->route('listings.index')->with('success', 'Listing deleted successfully!');
     }
 }
