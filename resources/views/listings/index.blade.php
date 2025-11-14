@@ -29,12 +29,14 @@
 
                         <!-- Listing Image -->
                         @if ($listing->photos && count(json_decode($listing->photos, true)) > 0)
-                            <img src="{{ asset('storage/' . json_decode($listing->photos, true)[0]) }}"
-                                 alt="Listing Photo"
-                                 class="rounded-lg w-full h-48 object-cover mb-4">
+                            <div class="aspect-[4/3] w-full overflow-hidden rounded-2xl bg-gray-700">
+                                <img src="{{ asset('storage/' . json_decode($listing->photos, true)[0]) }}"
+                                    alt="{{ $listing->title }}"
+                                    class="w-full h-full object-cover object-center rounded-2xl transition-transform duration-300 hover:scale-105">
+                            </div>
                         @else
-                            <div class="aspect-[4/3] bg-gray-700 rounded-lg mb-4 flex items-center justify-center">
-                                <span class="text-gray-500 text-sm">No image</span>
+                            <div class="aspect-[4/3] w-full bg-gray-700 flex items-center justify-center rounded-2xl">
+                                <span class="text-gray-400">No image</span>
                             </div>
                         @endif
 
