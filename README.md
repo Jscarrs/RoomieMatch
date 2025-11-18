@@ -46,8 +46,8 @@ Contains gender preferences, ensuite washroom, pet friendly and different types 
 ## Team Members and Responsibilities
 
 | Name | GitHub Username |  Responsibilities | 
-|-------|-------------|
-| Scarlett | @jscarrs |
-| Divjit | Blade Templates + Tailwind CSS + Vite |
-| Joe | MySQL |
-| Rajkamal | Git & GitHub |
+|-------|-----------------|------------------------|
+| Scarlett | @jscarrs | Listings + Search Bar with Filters |
+| Divjit | @Divjit07 | Login, Registration, sql queries | 
+| Joe | @jghart | Homepage, About, CSS |
+| Rajkamal | @RajkamalSingh2002 | Admin + User Dashboards |
