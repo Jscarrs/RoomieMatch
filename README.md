@@ -49,7 +49,7 @@ Contains gender preferences, ensuite washroom, pet friendly and different types 
 |-------|-----------------|------------------------|
 | Scarlett | @jscarrs | Listings + Search Bar with Filters |
 | Divjit | @Divjit07 | Login, Registration, SQL queries, Contact | 
-| Joe | @jghart | Homepage, About, CSS, Contact |
+| Joe | @jghart | Homepage, About, CSS, Contact, Migrations, Seeders |
 | Rajkamal | @RajkamalSingh2002 | Admin + User Dashboards |
 
 ## Coding Standards
