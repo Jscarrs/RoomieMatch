@@ -48,8 +48,8 @@ Contains gender preferences, ensuite washroom, pet friendly and different types 
 | Name | GitHub Username |  Responsibilities | 
 |-------|-----------------|------------------------|
 | Scarlett | @jscarrs | Listings + Search Bar with Filters |
-| Divjit | @Divjit07 | Login, Registration, SQL queries, Contact | 
-| Joe | @jghart | Homepage, About, CSS, Contact, Migrations, Seeders |
+| Divjit | @Divjit07 | Login, Registration,  Contact | 
+| Joe | @jghart | Homepage, About, CSS, Migrations, Seeders |
 | Rajkamal | @RajkamalSingh2002 | Admin + User Dashboards |
 
 ## Coding Standards
