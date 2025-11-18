@@ -10,37 +10,67 @@ use Illuminate\Support\Facades\Storage;
 class ListingController extends Controller
 {
     /**
-     * Display listings with optional filters.
+     * Middleware — restrict create/edit/delete to logged-in users only
+     */
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
+    /**
+     * Display listings with optional filters and search.
      */
     public function index(Request $request)
     {
         $query = Listing::query();
 
-        if ($request->filled('lease_type')) {
-            $query->where('lease_type', $request->lease_type);
+        // ✅ Partial search: title, address, description
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('title', 'like', '%' . $request->search . '%')
+                    ->orWhere('address', 'like', '%' . $request->search . '%')
+                    ->orWhere('description', 'like', '%' . $request->search . '%');
+            });
         }
 
-        if ($request->filled('property_type')) {
-            $query->where('property_type', $request->property_type);
-        }
-
-        if ($request->boolean('ensuite_washroom')) {
-            $query->where('ensuite_washroom', true);
-        }
-
-        if ($request->boolean('pet_friendly')) {
-            $query->where('pet_friendly', true);
-        }
-
+        // ✅ Price range filters
         if ($request->filled('min_price')) {
             $query->where('price', '>=', $request->min_price);
         }
-
         if ($request->filled('max_price')) {
             $query->where('price', '<=', $request->max_price);
         }
 
-        $listings = $query->latest()->paginate(10);
+        // ✅ Dropdown filters
+        foreach (['lease_type', 'property_type', 'gender_preference'] as $filter) {
+            if ($request->filled($filter)) {
+                $query->where($filter, $request->$filter);
+            }
+        }
+
+        // ✅ Checkbox filters
+        if ($request->boolean('ensuite_washroom')) {
+            $query->where('ensuite_washroom', true);
+        }
+        if ($request->boolean('pet_friendly')) {
+            $query->where('pet_friendly', true);
+        }
+
+        // ✅ Sorting logic
+        switch ($request->input('sort')) {
+            case 'price_low':
+                $query->orderBy('price', 'asc');
+                break;
+            case 'price_high':
+                $query->orderBy('price', 'desc');
+                break;
+            default:
+                $query->latest(); // Most recent listings first
+                break;
+        }
+
+        // ✅ Paginate results (with query string to persist filters)
+        $listings = $query->paginate(9)->withQueryString();
 
         return view('listings.index', compact('listings'));
     }
@@ -76,7 +106,7 @@ class ListingController extends Controller
         $validated['ensuite_washroom'] = $request->has('ensuite_washroom');
         $validated['pet_friendly'] = $request->has('pet_friendly');
 
-        // Handle image upload
+        // ✅ Handle image upload
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('listings', 'public');
             $validated['photos'] = json_encode([$path]);
@@ -133,7 +163,7 @@ class ListingController extends Controller
         $validated['ensuite_washroom'] = $request->has('ensuite_washroom');
         $validated['pet_friendly'] = $request->has('pet_friendly');
 
-        // Replace photo if new one uploaded
+        // ✅ Replace photo if a new one is uploaded
         if ($request->hasFile('photo')) {
             if ($listing->photos) {
                 $oldPhotos = json_decode($listing->photos, true);
@@ -160,7 +190,7 @@ class ListingController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        // Delete photos from storage
+        // ✅ Delete photos from storage
         if ($listing->photos) {
             $photos = json_decode($listing->photos, true);
             foreach ($photos as $photo) {
@@ -168,7 +198,7 @@ class ListingController extends Controller
             }
         }
 
-        // Permanently delete record
+        // ✅ Permanently delete record
         $listing->delete();
 
         return redirect()->route('listings.index')->with('success', 'Listing deleted successfully!');

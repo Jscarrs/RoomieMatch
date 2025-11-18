@@ -11,27 +11,29 @@ use Illuminate\Http\Request;
 |--------------------------------------------------------------------------
 | Public Pages
 |--------------------------------------------------------------------------
+| These pages are accessible without authentication.
+|--------------------------------------------------------------------------
 */
 
-Route::view('/', 'home')->name('home');
+// Homepage now shows listings with filters
+Route::get('/', [ListingController::class, 'index'])->name('home');
+
+// Static informational pages
 Route::view('/about', 'about')->name('about');
 
-
-// GET: Show contact form
+// Contact form (GET + POST)
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
-// POST: Handle form submission
-Route::post('/contact', function (Request $request) 
-{
+Route::post('/contact', function (Request $request) {
     $validated = $request->validate([
         'name'    => 'required|string|max:255',
         'email'   => 'required|email',
         'message' => 'required|string|min:10',
     ]);
 
-    // Here you would typically send an email or store the message in the database.
+    // Here you could send an email or store the message in the database.
     return redirect()
         ->route('contact')
         ->with('success', 'Your message has been sent successfully!');
@@ -41,17 +43,21 @@ Route::post('/contact', function (Request $request)
 |--------------------------------------------------------------------------
 | Public Listing Routes
 |--------------------------------------------------------------------------
-| These are accessible without login. The show route must stay at the bottom
-| so it doesn’t override other “/listings/*” URLs like /listings/create.
+| Guests can view and search listings without logging in.
 |--------------------------------------------------------------------------
 */
 
-// Browse all listings
+// Browse all listings (also used for homepage)
 Route::get('/listings', [ListingController::class, 'index'])->name('listings.index');
+
+// View a single listing (must come after /listings to avoid conflicts)
+Route::get('/listings/{listing}', [ListingController::class, 'show'])->name('listings.show');
 
 /*
 |--------------------------------------------------------------------------
 | Authenticated User Routes
+|--------------------------------------------------------------------------
+| Routes that require login (create, edit, delete, profile, etc.)
 |--------------------------------------------------------------------------
 */
 
@@ -61,7 +67,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [UserDashboardController::class, 'index'])
         ->name('user.dashboard');
 
-    // Listing Management (Create, Edit, Delete)
+    // Listing Management
     Route::get('/listings/create', [ListingController::class, 'create'])->name('listings.create');
     Route::post('/listings', [ListingController::class, 'store'])->name('listings.store');
     Route::get('/listings/{listing}/edit', [ListingController::class, 'edit'])->name('listings.edit');
@@ -76,19 +82,9 @@ Route::middleware(['auth'])->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| Public "Show Listing" Route
-|--------------------------------------------------------------------------
-| Placed after the auth group to avoid collisions with /listings/create or edit.
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/listings/{listing}', [ListingController::class, 'show'])->name('listings.show');
-
-/*
-|--------------------------------------------------------------------------
 | Admin Pages & User Management
 |--------------------------------------------------------------------------
-| All admin-specific routes are protected by authentication.
+| Protected by authentication (and typically admin middleware if you have one).
 |--------------------------------------------------------------------------
 */
 
