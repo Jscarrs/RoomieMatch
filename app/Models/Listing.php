@@ -9,7 +9,6 @@ class Listing extends Model
 {
     use HasFactory;
 
-    
     protected $fillable = [
         'user_id',
         'title',
@@ -25,10 +24,22 @@ class Listing extends Model
         'photos',
     ];
 
-    // (optional) Casts for JSON and booleans
     protected $casts = [
         'photos' => 'array',
         'ensuite_washroom' => 'boolean',
         'pet_friendly' => 'boolean',
     ];
+
+    /**
+     * Relationships for favorites
+     */
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function favoritedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'favorites');
+    }
 }

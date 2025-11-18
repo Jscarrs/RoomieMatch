@@ -4,13 +4,16 @@
 <section class="bg-gray-900 text-gray-100 min-h-screen py-10">
     <div class="max-w-5xl mx-auto px-6">
 
+        {{-- ✅ Success Message --}}
         @if (session('success'))
             <div class="mb-6 p-4 bg-emerald-600/20 text-emerald-400 rounded-lg border border-emerald-600/30">
                 {{ session('success') }}
             </div>
         @endif
 
+        {{-- ✅ Listing Card --}}
         <div class="bg-gray-800 rounded-2xl shadow-lg p-8 flex flex-col md:flex-row gap-8">
+            {{-- Listing Image --}}
             <div class="md:w-1/2">
                 @if ($listing->photos && count(json_decode($listing->photos, true)) > 0)
                     <img src="{{ asset('storage/' . json_decode($listing->photos, true)[0]) }}"
@@ -23,6 +26,7 @@
                 @endif
             </div>
 
+            {{-- Listing Info --}}
             <div class="md:w-1/2 flex flex-col justify-between">
                 <div>
                     <h1 class="text-3xl font-bold mb-2">{{ $listing->title }}</h1>
@@ -32,6 +36,7 @@
                         <span class="text-sm text-gray-400">/month</span>
                     </p>
 
+                    {{-- Tags --}}
                     <div class="flex flex-wrap gap-2 mb-4">
                         @if ($listing->lease_type)
                             <span class="bg-gray-700 px-3 py-1 rounded-full text-xs">{{ $listing->lease_type }}</span>
@@ -52,32 +57,54 @@
                         @endif
                     </div>
 
+                    {{-- Bathrooms --}}
                     @if ($listing->bathrooms)
                         <p class="text-gray-300 mb-2">
                             <strong>Bathrooms:</strong> {{ $listing->bathrooms }}
                         </p>
                     @endif
 
+                    {{-- Description --}}
                     <h2 class="text-lg font-semibold mb-1">Description</h2>
                     <p class="text-gray-300 mb-6">{{ $listing->description ?? 'No description provided.' }}</p>
 
+                    {{-- Owner --}}
                     <p class="text-sm text-gray-500">
                         Listed by: 
                         <span class="text-gray-300 font-medium">{{ $listing->user->name ?? 'Unknown User' }}</span>
                     </p>
                 </div>
 
+                {{-- ✅ Action Buttons --}}
                 <div class="flex gap-4 mt-6">
                     <a href="#" class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition">
                         Contact Owner
                     </a>
-                    <a href="#" class="px-4 py-2 bg-gray-700 text-gray-200 rounded-lg hover:bg-gray-600 transition">
-                        Add to Favourites
-                    </a>
+
+                    {{-- ✅ Favourites Button --}}
+                    @auth
+                        <form action="{{ route('favorites.toggle', $listing->id) }}" method="POST">
+                            @csrf
+                            <button type="submit"
+                                class="px-4 py-2 bg-gray-700 text-gray-200 rounded-lg hover:bg-gray-600 transition">
+                                @if (auth()->user()->favoriteListings->contains($listing->id))
+                                    Remove from Favourites
+                                @else
+                                    Add to Favourites
+                                @endif
+                            </button>
+                        </form>
+                    @else
+                        {{-- Guests just see a disabled button --}}
+                        <button class="px-4 py-2 bg-gray-700 text-gray-400 rounded-lg cursor-not-allowed" disabled>
+                            Login to Favourite
+                        </button>
+                    @endauth
                 </div>
             </div>
         </div>
 
+        {{-- ✅ Edit/Delete for Owner --}}
         @auth
             @if ($listing->user_id === auth()->id())
                 <div x-data="{ open: false }" class="mt-8 flex gap-4">
@@ -96,6 +123,7 @@
                         </button>
                     </form>
 
+                    {{-- Edit Modal --}}
                     <div x-show="open" x-transition.opacity
                         class="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
                         <div class="bg-gray-800 p-6 rounded-2xl w-full sm:w-11/12 md:w-3/4 lg:w-2/5 xl:w-2/6 
@@ -126,6 +154,7 @@
             @endif
         @endauth
 
+        {{-- ✅ Back to Listings --}}
         <div class="mt-8">
             <a href="{{ route('listings.index') }}" class="text-emerald-400 hover:underline">
                 ← Back to Listings

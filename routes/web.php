@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\ListingController;
+use App\Http\Controllers\FavoriteController; // ✅ Add this line
 use Illuminate\Http\Request;
 
 /*
@@ -57,7 +58,7 @@ Route::get('/listings/{listing}', [ListingController::class, 'show'])->name('lis
 |--------------------------------------------------------------------------
 | Authenticated User Routes
 |--------------------------------------------------------------------------
-| Routes that require login (create, edit, delete, profile, etc.)
+| Routes that require login (create, edit, delete, profile, favorites, etc.)
 |--------------------------------------------------------------------------
 */
 
@@ -73,6 +74,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/listings/{listing}/edit', [ListingController::class, 'edit'])->name('listings.edit');
     Route::put('/listings/{listing}', [ListingController::class, 'update'])->name('listings.update');
     Route::delete('/listings/{listing}', [ListingController::class, 'destroy'])->name('listings.destroy');
+
+    // ✅ FAVORITES (New)
+    Route::post('/favorites/{listing}/toggle', [FavoriteController::class, 'toggle'])
+        ->name('favorites.toggle');
+    Route::get('/favorites', [FavoriteController::class, 'index'])
+        ->name('favorites.index');
 
     // Profile Management
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

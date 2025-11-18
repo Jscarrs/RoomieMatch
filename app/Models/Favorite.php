@@ -9,12 +9,8 @@ class Favorite extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'user_id',
-        'listing_id',
-    ];
+    protected $fillable = ['user_id', 'listing_id'];
 
-    // Relationships
     public function user()
     {
         return $this->belongsTo(User::class);
