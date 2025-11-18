@@ -14,6 +14,14 @@
             <p class="text-gray-400 mt-1 text-sm">Sign in to continue to RoomieMatch</p>
         </div>
 
+        <!-- Registration Success Message -->
+        <?php if(session('success')): ?>
+            <div class="mb-4 bg-green-100 text-green-700 p-2 rounded font-semibold">
+                <?php echo e(session('success')); ?>
+
+            </div>
+        <?php endif; ?>
+
         <!-- Session Status -->
         <?php if (isset($component)) { $__componentOriginal7c1bf3a9346f208f66ee83b06b607fb5 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal7c1bf3a9346f208f66ee83b06b607fb5 = $attributes; } ?>
@@ -171,14 +179,14 @@
             <div class="flex items-center justify-between mt-4">
                 <label for="remember_me" class="flex items-center">
                     <input id="remember_me" type="checkbox"
-                           class="rounded border-gray-600 bg-gray-800 text-indigo-500 shadow-sm focus:ring-indigo-500"
-                           name="remember">
+                        class="rounded border-gray-600 bg-gray-800 text-indigo-500 shadow-sm focus:ring-indigo-500"
+                        name="remember">
                     <span class="ms-2 text-sm text-gray-400"><?php echo e(__('Remember me')); ?></span>
                 </label>
 
                 <?php if(Route::has('password.request')): ?>
                     <a class="text-sm text-indigo-400 hover:text-indigo-300 transition-colors duration-200"
-                       href="<?php echo e(route('password.request')); ?>">
+                        href="<?php echo e(route('password.request')); ?>">
                         <?php echo e(__('Forgot password?')); ?>
 
                     </a>
