@@ -38,4 +38,16 @@ cp .env.example .env
 php artisan key:generate
 php artisan migrate --seed
 php artisan serve
+```
 
+## Features
+Contains gender preferences, ensuite washroom, pet friendly and different types of accomodation in the filters
+
+## Team Members and Responsibilities
+
+| Name | GitHub Username |  Responsibilities | 
+|-------|-------------|
+| Scarlett | @jscarrs |
+| Divjit | Blade Templates + Tailwind CSS + Vite |
+| Joe | MySQL |
+| Rajkamal | Git & GitHub |
