@@ -15,11 +15,11 @@ Built using **Laravel**, **Tailwind CSS**, and **Vite**, the project emphasizes 
 
 ---
 
-## 🚀 Tech Stack
+## 🚀 Technologies Used
 
 | Layer | Technology |
 |-------|-------------|
-| **Backend** | Laravel (PHP 8+) |
+| **Backend** | Laravel 12 (PHP 8+) |
 | **Frontend** | Blade Templates + Tailwind CSS + Vite |
 | **Database** | MySQL |
 | **Version Control** | Git & GitHub |
@@ -30,10 +30,12 @@ Built using **Laravel**, **Tailwind CSS**, and **Vite**, the project emphasizes 
 
 Follow these steps to set up the project on your local machine.
 
----
-
-### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/<your-username>/roomiematch.git
-cd roomiematch
+git clone https://github.com/group-name/project-name.git
+cd project-name
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+php artisan serve
 
