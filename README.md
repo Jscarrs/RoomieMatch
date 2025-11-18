@@ -51,3 +51,8 @@ Contains gender preferences, ensuite washroom, pet friendly and different types 
 | Divjit | @Divjit07 | Login, Registration, sql queries | 
 | Joe | @jghart | Homepage, About, CSS |
 | Rajkamal | @RajkamalSingh2002 | Admin + User Dashboards |
+
+## Coding Standards
+Code follows PSR-1 and PSR-12
+Consistent naming conventions used throughout the application
+Proper error handling and validation implemented
