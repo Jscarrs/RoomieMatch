@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <!-- ✅ Authenticated User Dropdown -->
+            <!-- Authenticated User Dropdown -->
             @auth
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
                     <x-dropdown align="right" width="48">
@@ -70,7 +70,7 @@
                 </div>
             @endauth
 
-            <!-- ✅ Guest Links (Login / Register) -->
+            <!-- Guest Links (Login / Register) -->
             @guest
                 <div class="hidden sm:flex sm:items-center sm:space-x-4">
                     <a href="{{ route('login') }}" class="text-gray-300 hover:text-emerald-400 transition">
@@ -99,7 +99,7 @@
         </div>
     </div>
 
-    <!-- ✅ Mobile Navigation -->
+    <!-- Mobile Navigation -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-gray-900 border-t border-gray-800">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link 
@@ -115,7 +115,7 @@
             </x-responsive-nav-link>
         </div>
 
-        <!-- ✅ Mobile User Info -->
+        <!-- Mobile User Info -->
         @auth
             <div class="pt-4 pb-1 border-t border-gray-800">
                 <div class="px-4">
@@ -140,7 +140,7 @@
             </div>
         @endauth
 
-        <!-- ✅ Mobile Guest Links -->
+        <!-- Mobile Guest Links -->
         @guest
             <div class="pt-4 pb-4 border-t border-gray-800 space-y-2 px-4">
                 <a href="{{ route('login') }}" class="block text-gray-300 hover:text-emerald-400">

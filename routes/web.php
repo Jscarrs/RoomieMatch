@@ -5,7 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\ListingController;
-use App\Http\Controllers\FavoriteController; // ✅ Add this line
+use App\Http\Controllers\FavoriteController; 
 use Illuminate\Http\Request;
 
 /*
@@ -60,7 +60,7 @@ Route::post('/contact', function (Request $request) {
         Route::put('/listings/{listing}', [ListingController::class, 'update'])->name('listings.update');
         Route::delete('/listings/{listing}', [ListingController::class, 'destroy'])->name('listings.destroy');
 
-        // ✅ FAVORITES (New)
+        // FAVORITES 
         Route::post('/favorites/{listing}/toggle', [FavoriteController::class, 'toggle'])
             ->name('favorites.toggle');
         Route::get('/favorites', [FavoriteController::class, 'index'])
@@ -91,7 +91,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/listings/{listing}', [ListingController::class, 'update'])->name('listings.update');
     Route::delete('/listings/{listing}', [ListingController::class, 'destroy'])->name('listings.destroy');
 
-    // ✅ FAVORITES (New)
+    // FAVORITES
     Route::post('/favorites/{listing}/toggle', [FavoriteController::class, 'toggle'])
         ->name('favorites.toggle');
     Route::get('/favorites', [FavoriteController::class, 'index'])

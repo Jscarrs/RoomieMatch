@@ -75,13 +75,13 @@
                     </p>
                 </div>
 
-                {{-- ✅ Action Buttons --}}
+                {{-- Action Buttons --}}
                 <div class="flex gap-4 mt-6">
                     <a href="#" class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition">
                         Contact Owner
                     </a>
 
-                    {{-- ✅ Favourites Button --}}
+                    {{-- Favourites Button --}}
                     @auth
                         <form action="{{ route('favorites.toggle', $listing->id) }}" method="POST">
                             @csrf
@@ -104,7 +104,7 @@
             </div>
         </div>
 
-        {{-- ✅ Edit/Delete for Owner --}}
+        {{-- Edit/Delete for Owner --}}
         @auth
             @if ($listing->user_id === auth()->id())
                 <div x-data="{ open: false }" class="mt-8 flex gap-4">
@@ -154,7 +154,7 @@
             @endif
         @endauth
 
-        {{-- ✅ Back to Listings --}}
+        {{--Back to Listings --}}
         <div class="mt-8">
             <a href="{{ route('listings.index') }}" class="text-emerald-400 hover:underline">
                 ← Back to Listings

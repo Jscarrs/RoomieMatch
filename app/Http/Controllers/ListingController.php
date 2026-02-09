@@ -24,7 +24,7 @@ class ListingController extends Controller
     {
         $query = Listing::query();
 
-        // ✅ Partial search: title, address, description
+        //  Partial search: title, address, description
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request) {
                 $q->where('title', 'like', '%' . $request->search . '%')
@@ -33,7 +33,7 @@ class ListingController extends Controller
             });
         }
 
-        // ✅ Price range filters
+        //  Price range filters
         if ($request->filled('min_price')) {
             $query->where('price', '>=', $request->min_price);
         }
@@ -41,14 +41,14 @@ class ListingController extends Controller
             $query->where('price', '<=', $request->max_price);
         }
 
-        // ✅ Dropdown filters
+        // Dropdown filters
         foreach (['lease_type', 'property_type', 'gender_preference'] as $filter) {
             if ($request->filled($filter)) {
                 $query->where($filter, $request->$filter);
             }
         }
 
-        // ✅ Checkbox filters
+        //  Checkbox filters
         if ($request->boolean('ensuite_washroom')) {
             $query->where('ensuite_washroom', true);
         }
@@ -56,7 +56,7 @@ class ListingController extends Controller
             $query->where('pet_friendly', true);
         }
 
-        // ✅ Sorting logic
+        // Sorting logic
         switch ($request->input('sort')) {
             case 'price_low':
                 $query->orderBy('price', 'asc');
@@ -69,7 +69,7 @@ class ListingController extends Controller
                 break;
         }
 
-        // ✅ Paginate results (with query string to persist filters)
+        //  Paginate results (with query string to persist filters)
         $listings = $query->paginate(9)->withQueryString();
 
         return view('listings.index', compact('listings'));
@@ -106,7 +106,7 @@ class ListingController extends Controller
         $validated['ensuite_washroom'] = $request->has('ensuite_washroom');
         $validated['pet_friendly'] = $request->has('pet_friendly');
 
-        // ✅ Handle image upload
+        //  Handle image upload
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('listings', 'public');
             $validated['photos'] = json_encode([$path]);
@@ -163,7 +163,7 @@ class ListingController extends Controller
         $validated['ensuite_washroom'] = $request->has('ensuite_washroom');
         $validated['pet_friendly'] = $request->has('pet_friendly');
 
-        // ✅ Replace photo if a new one is uploaded
+        //  Replace photo if a new one is uploaded
         if ($request->hasFile('photo')) {
             if ($listing->photos) {
                 $oldPhotos = json_decode($listing->photos, true);
@@ -190,7 +190,7 @@ class ListingController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        // ✅ Delete photos from storage
+        //  Delete photos from storage
         if ($listing->photos) {
             $photos = json_decode($listing->photos, true);
             foreach ($photos as $photo) {
@@ -198,7 +198,7 @@ class ListingController extends Controller
             }
         }
 
-        // ✅ Permanently delete record
+        //  Permanently delete record
         $listing->delete();
 
         return redirect()->route('listings.index')->with('success', 'Listing deleted successfully!');
