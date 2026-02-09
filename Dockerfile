@@ -7,22 +7,34 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
     libonig-dev \
     libxml2-dev \
     libzip-dev \
-    && docker-php-ext-install pdo pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd zip
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install \
+        pdo \
+        pdo_mysql \
+        pdo_pgsql \
+        mbstring \
+        exif \
+        pcntl \
+        bcmath \
+        gd \
+        zip
 
 # Enable Apache rewrite
 RUN a2enmod rewrite
 
-# Install Node.js (LTS) + npm
+# Install Node.js LTS + npm
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs
 
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy app files
+# Copy application files
 COPY . .
 
 # Install Composer
@@ -34,7 +46,7 @@ RUN composer install --no-dev --optimize-autoloader
 # Build frontend assets
 RUN npm install && npm run build
 
-# Fix permissions
+# Fix Laravel permissions
 RUN chown -R www-data:www-data storage bootstrap/cache
 
 # Expose Apache port
