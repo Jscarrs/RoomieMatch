@@ -9,17 +9,20 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
-    nodejs \
-    npm \
-    && docker-php-ext-install pdo pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd
+    libzip-dev \
+    && docker-php-ext-install pdo pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd zip
 
 # Enable Apache rewrite
 RUN a2enmod rewrite
 
+# Install Node.js (LTS) + npm
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
+
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy app
+# Copy app files
 COPY . .
 
 # Install Composer
@@ -28,13 +31,13 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Install Node deps & build assets
+# Build frontend assets
 RUN npm install && npm run build
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# Fix permissions
+RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Expose port
+# Expose Apache port
 EXPOSE 80
 
 # Start Apache
